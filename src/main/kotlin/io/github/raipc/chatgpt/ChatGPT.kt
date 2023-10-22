@@ -1,19 +1,18 @@
 package io.github.raipc.chatgpt
 
-import java.net.http.HttpClient
+import io.github.raipc.chatgpt.http.HttpClient
+import io.github.raipc.chatgpt.service.ConversationImpl
+import io.github.raipc.chatgpt.service.ConversationService
 
-class ChatGPT(
-    private val sessionToken: String,
-    private val accessToken: String,
-    private val cfClearance: String,
-    private val userAgent: String,
-    httpClientSetup: (HttpClient.Builder) -> Unit = {}
-
+class ChatGPT internal constructor(
+    sessionToken: String,
+    cfClearance: String,
+    userAgent: String,
+    httpClient: HttpClient
 ) {
-    private val httpClient = HttpClient.newBuilder()
-        .apply(httpClientSetup)
-        .build()
-    fun doStuff() {
+    private val conversationService = ConversationService(httpClient, cfClearance, sessionToken, userAgent)
 
+    fun createConversation(model: String, prompt: InputMessage? = null): Conversation {
+        return ConversationImpl(conversationService, model, prompt)
     }
 }
