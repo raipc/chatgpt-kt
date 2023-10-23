@@ -5,9 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class Response(
-    var code: Int,
-    val error: String,
+    val error: String?,
     @SerialName("conversation_id")
-    val conversationId: String,
+    override val conversationId: String,
     val message: ResponseMessage
-)
+): ConversationPayload

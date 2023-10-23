@@ -3,10 +3,11 @@ package io.github.raipc.chatgpt.service
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 
-object JsonCodec {
+internal object JsonCodec {
     private val jsonCodec = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
+        isLenient = true
     }
 
     internal inline fun <reified T : Any> decodeFromString(value: String): T {

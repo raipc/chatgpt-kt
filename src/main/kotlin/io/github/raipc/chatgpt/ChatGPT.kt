@@ -12,7 +12,7 @@ class ChatGPT internal constructor(
 ) {
     private val conversationService = ConversationService(httpClient, cfClearance, sessionToken, userAgent)
 
-    fun createConversation(model: String, prompt: InputMessage? = null): Conversation {
+    fun createConversation(model: String, prompt: UserInput? = null): Conversation {
         return ConversationImpl(conversationService, model, prompt)
     }
 }
